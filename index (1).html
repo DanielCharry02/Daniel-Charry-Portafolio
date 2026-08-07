@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daniel Felipe Charry Rodríguez — Desarrollador Fullstack / Backend</title>
+<meta name="description" content="Desarrollador de software fullstack con foco en backend y arquitectura. Java, Go, Python/FastAPI, React, Angular y Next.js." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0D0F14;
+    --bg-2: #12151C;
+    --card: #161A22;
+    --card-hover: #1B202A;
+    --line: #232935;
+    --line-soft: #1C222C;
+    --text: #E7E9EE;
+    --muted: #969EAE;
+    --faint: #626C7C;
+    --accent: #E8A54B;
+    --accent-dim: rgba(232, 165, 75, 0.14);
+    --accent-line: rgba(232, 165, 75, 0.35);
+    --link: #7FB0FF;
+
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --maxw: 1080px;
+    --pad-x: clamp(20px, 5vw, 64px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* faint blueprint glow, kept quiet */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(680px circle at 78% -8%, rgba(232,165,75,0.08), transparent 60%),
+      radial-gradient(820px circle at 10% 8%, rgba(127,176,255,0.05), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+
+  a { color: inherit; text-decoration: none; }
+
+  .mono { font-family: var(--font-mono); }
+
+  /* eyebrow: a code-comment style label, encodes the section like a dev reads it */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: inline-block;
+  }
+  .eyebrow::before { content: "// "; color: var(--faint); }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(13,15,20,0.72);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 14px var(--pad-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+  }
+  .brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a {
+    font-size: 0.9rem;
+    color: var(--muted);
+    transition: color 0.18s ease;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--accent) !important;
+    border: 1px solid var(--accent-line);
+    padding: 7px 14px;
+    border-radius: 6px;
+    transition: background 0.18s ease;
+  }
+  .nav-cta:hover { background: var(--accent-dim); }
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding-top: clamp(72px, 12vh, 128px);
+    padding-bottom: clamp(56px, 9vh, 104px);
+  }
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 6px 13px;
+    border-radius: 999px;
+    margin-bottom: 30px;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(232,165,75,0.55);
+    animation: pulse 2.6s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(232,165,75,0.5); }
+    70% { box-shadow: 0 0 0 7px rgba(232,165,75,0); }
+    100% { box-shadow: 0 0 0 0 rgba(232,165,75,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+
+  .hero-name {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+  }
+  .hero-name b { color: var(--text); font-weight: 500; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6.4vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 22px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero .lede {
+    font-size: clamp(1.05rem, 2vw, 1.28rem);
+    color: var(--muted);
+    max-width: 60ch;
+    margin-bottom: 34px;
+  }
+  .hero .lede strong { color: var(--text); font-weight: 600; }
+
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 42px; }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: transform 0.15s ease, background 0.18s ease, border-color 0.18s ease;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--accent); color: #1A1206; font-weight: 500; }
+  .btn-primary:hover { transform: translateY(-2px); background: #f0b45f; }
+  .btn-ghost { border-color: var(--line); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent-line); background: var(--bg-2); }
+
+  /* manifest: a compact mono block, a nod to a config/manifest file */
+  .manifest {
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, var(--bg-2), rgba(18,21,28,0.4));
+    padding: 20px 22px;
+    max-width: 560px;
+  }
+  .manifest .row { display: flex; gap: 14px; padding: 3px 0; }
+  .manifest .k { color: var(--faint); min-width: 92px; }
+  .manifest .v { color: var(--text); }
+  .manifest .v b { color: var(--accent); font-weight: 500; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block {
+    position: relative;
+    z-index: 1;
+    padding-top: clamp(64px, 10vh, 108px);
+    padding-bottom: clamp(64px, 10vh, 108px);
+    border-top: 1px solid var(--line-soft);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 780px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .about-copy p { color: var(--muted); margin-bottom: 16px; font-size: 1.02rem; }
+  .about-copy p strong { color: var(--text); font-weight: 600; }
+  .about-copy .lead { color: var(--text); font-size: 1.12rem; }
+
+  .principle {
+    border-left: 2px solid var(--accent-line);
+    background: var(--bg-2);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 20px;
+  }
+  .principle .label {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .principle p { color: var(--muted); font-size: 0.96rem; }
+
+  /* ---------- STACK ---------- */
+  .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 16px; }
+  .stack-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .stack-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 14px;
+    letter-spacing: 0.01em;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 5px 11px;
+    border-radius: 6px;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects { display: flex; flex-direction: column; gap: 22px; }
+  .project {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px clamp(22px, 3vw, 34px);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .project:hover { border-color: var(--accent-line); background: var(--card-hover); transform: translateY(-3px); }
+  .project-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .project-head h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.01em; }
+  .project-kind { font-family: var(--font-mono); font-size: 0.76rem; color: var(--faint); white-space: nowrap; }
+  .project-role { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin: 8px 0 14px; }
+  .project p.desc { color: var(--muted); margin-bottom: 16px; max-width: 68ch; }
+
+  /* the signature: a spec-line that surfaces a real architecture decision */
+  .spec {
+    font-family: var(--font-mono);
+    font-size: 0.83rem;
+    color: var(--muted);
+    background: var(--bg-2);
+    border: 1px solid var(--line-soft);
+    border-left: 2px solid var(--accent-line);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 15px;
+    margin-bottom: 18px;
+  }
+  .spec b { color: var(--text); font-weight: 500; }
+
+  .project-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .project .chips .chip { background: transparent; }
+  .project-links { display: flex; gap: 16px; }
+  .project-links a {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .project-links a:hover { color: var(--accent); border-color: var(--accent-line); }
+  .project-links a[aria-disabled="true"] { color: var(--faint); pointer-events: none; }
+
+  /* ---------- EXPERIENCE / EDUCATION ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 780px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
+  .entry { border-left: 1px solid var(--line); padding-left: 22px; position: relative; }
+  .entry::before {
+    content: "";
+    position: absolute; left: -5px; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .entry .role { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; }
+  .entry .org { color: var(--text); font-size: 0.98rem; margin-top: 2px; }
+  .entry .meta { font-family: var(--font-mono); font-size: 0.78rem; color: var(--faint); margin: 6px 0 12px; }
+  .entry ul { list-style: none; }
+  .entry li { color: var(--muted); font-size: 0.95rem; padding-left: 18px; position: relative; margin-bottom: 7px; }
+  .entry li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
+
+  /* ---------- CONTACT ---------- */
+  .contact { text-align: center; }
+  .contact .section-title { margin-bottom: 16px; }
+  .contact p.sub { color: var(--muted); max-width: 52ch; margin: 0 auto 30px; font-size: 1.06rem; }
+  .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
+  .contact-links a {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    border: 1px solid var(--line);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: var(--text);
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.15s ease;
+  }
+  .contact-links a:hover { border-color: var(--accent-line); background: var(--bg-2); transform: translateY(-2px); }
+
+  /* ---------- FOOTER ---------- */
+  footer.foot {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--line-soft);
+    padding: 28px var(--pad-x);
+    text-align: center;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Daniel <span>Charry</span></a>
+    <nav class="nav-links">
+      <a href="#sobre">Sobre mí</a>
+      <a href="#stack">Stack</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#contacto" class="nav-cta">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-status">
+      <span class="dot"></span>
+      Disponible para proyectos y colaboraciones
+    </div>
+    <p class="hero-name"><b>Daniel Felipe Charry Rodríguez</b></p>
+    <h1>Construyo software<br>de <span class="accent">extremo a extremo</span>,<br>con la arquitectura bien puesta.</h1>
+    <p class="lede">
+      Ingeniero de Sistemas en formación, enfocado en <strong>desarrollo fullstack con foco en backend</strong>.
+      Diseño APIs, lógica de negocio y bases de datos que aguantan el uso real —no solo la demo.
+    </p>
+    <div class="hero-actions">
+      <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+      <a href="https://github.com/DanielCharry02" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+
+    <div class="manifest" aria-label="Resumen técnico">
+      <div class="row"><span class="k">backend</span><span class="v"><b>Java</b> · <b>Go</b> · <b>Python / FastAPI</b></span></div>
+      <div class="row"><span class="k">frontend</span><span class="v">React 18 · Angular 17 · Next.js 14 · TypeScript</span></div>
+      <div class="row"><span class="k">datos</span><span class="v">PostgreSQL · MySQL · MongoDB</span></div>
+      <div class="row"><span class="k">infra</span><span class="v">Docker · JWT · Supabase · Railway · Vercel</span></div>
+    </div>
+  </section>
+
+  <!-- SOBRE MÍ -->
+  <section class="block" id="sobre">
+    <div class="wrap">
+      <span class="eyebrow reveal">sobre-mí</span>
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p class="lead">Me interesa la parte del software que no se ve pero sostiene todo: cómo se estructuran los datos, cómo se protege una transacción, cómo se separan las capas para que el sistema crezca sin romperse.</p>
+          <p>Soy estudiante de <strong>Ingeniería de Sistemas (décimo semestre)</strong> con más de un año construyendo software real. Durante mi pasantía en <strong>ARL SURA</strong> trabajé con microservicios en Java y frontend en Angular 17 dentro de un entorno empresarial.</p>
+          <p>Fuera de eso, desarrollo proyectos propios de principio a fin —desde el modelado de la base de datos hasta el frontend—, casi siempre liderando la parte de <strong>backend y arquitectura</strong>.</p>
+        </div>
+        <div class="principle reveal">
+          <div class="label">cómo trabajo</div>
+          <p>Escribo código que puedo explicar y reescribir sin depender de que "simplemente funcione". Priorizo entender el porqué de cada decisión técnica —concurrencia, atomicidad, separación de capas— antes de dar algo por terminado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="block" id="stack">
+    <div class="wrap">
+      <span class="eyebrow reveal">stack</span>
+      <h2 class="section-title reveal">Con lo que construyo</h2>
+      <div class="stack-grid">
+        <div class="stack-card reveal">
+          <h3>Backend</h3>
+          <div class="chips">
+            <span class="chip">Java</span><span class="chip">Go</span><span class="chip">Python</span><span class="chip">FastAPI</span>
+          </div>
+        </div>
+        <div class="stack-card reveal">
+          <h3>Frontend</h3>
+          <div class="chips">
+            <span class="chip">TypeScript</span><span class="chip">React 18</span><span class="chip">Angular 17</span><span class="chip">Next.js 14</span>
+          </div>
+        </div>
+        <div class="stack-card reveal">
+          <h3>Bases de datos</h3>
+          <div class="chips">
+            <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">GORM</span><span class="chip">Prisma</span>
+          </div>
+        </div>
+        <div class="stack-card reveal">
+          <h3>Infra &amp; Tooling</h3>
+          <div class="chips">
+            <span class="chip">Docker</span><span class="chip">JWT</span><span class="chip">Supabase</span><span class="chip">Railway</span><span class="chip">Vercel</span><span class="chip">Git</span>
+          </div>
+        </div>
+        <div class="stack-card reveal">
+          <h3>Testing</h3>
+          <div class="chips">
+            <span class="chip">JUnit</span><span class="chip">Mockito</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section class="block" id="proyectos">
+    <div class="wrap">
+      <span class="eyebrow reveal">proyectos</span>
+      <h2 class="section-title reveal">Cosas que he construido</h2>
+      <div class="projects">
+
+        <article class="project reveal">
+          <div class="project-head">
+            <h3>Factiux</h3>
+            <span class="project-kind">app de escritorio · 2026</span>
+          </div>
+          <div class="project-role">Backend &amp; arquitectura</div>
+          <p class="desc">Sistema de gestión de pedidos para restaurantes y bares. Aplicación de escritorio con arquitectura por capas (DDD) sobre el bridge de Wails, con validación de sesión y permisos por operación.</p>
+          <div class="spec">arq: <b>DDD por capas</b> · respuesta uniforme <b>AppResponse{ok,data,error}</b> sobre IPC · locking con <b>SELECT … FOR UPDATE</b> para evitar facturas duplicadas</div>
+          <div class="project-foot">
+            <div class="chips">
+              <span class="chip">Go</span><span class="chip">Wails v2</span><span class="chip">React 18</span><span class="chip">MySQL</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Planta02/Factiux" target="_blank" rel="noopener">Código ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-head">
+            <h3>NominaApp</h3>
+            <span class="project-kind">SaaS · 2026</span>
+          </div>
+          <div class="project-role">Backend</div>
+          <p class="desc">Plataforma SaaS de automatización de nómina para pequeñas empresas de Latinoamérica. Motor de cálculo con múltiples modalidades de contrato, recargos nocturnos y redondeo, expuesto vía API para el panel web.</p>
+          <div class="spec">lógica: <b>4 rutas de cálculo</b> (tiempo completo Q1/Q2, cuenta de cobro, tiempo parcial) · recargo nocturno desde 19:00 · redondeo al millar</div>
+          <div class="project-foot">
+            <div class="chips">
+              <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">Next.js</span><span class="chip">Supabase</span><span class="chip">Railway</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/DanielCharry02/NominaRepo" target="_blank" rel="noopener">Código ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-head">
+            <h3>CiberSafe</h3>
+            <span class="project-kind">plataforma web · 2026</span>
+          </div>
+          <div class="project-role">Backend &amp; APIs</div>
+          <p class="desc">Plataforma de formación en ciberseguridad con roles, dashboards y un motor de simulación por árbol de decisión. Desarrollé las APIs de autenticación y la generación de certificados en PDF.</p>
+          <div class="spec">datos: <b>10 modelos</b> con Prisma · auth con <b>JWT + bcrypt</b> · middleware por rol · certificados en <b>PDF</b> generados en backend</div>
+          <div class="project-foot">
+            <div class="chips">
+              <span class="chip">Next.js 14</span><span class="chip">TypeScript</span><span class="chip">Prisma</span><span class="chip">PostgreSQL</span><span class="chip">JWT</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/DanielCharry02/Cyber_Save" target="_blank" rel="noopener">Código ↗</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAYECTORIA -->
+  <section class="block" id="trayectoria">
+    <div class="wrap">
+      <span class="eyebrow reveal">trayectoria</span>
+      <div class="two-col">
+        <div class="reveal">
+          <h2 class="section-title">Experiencia</h2>
+          <div class="entry">
+            <div class="role">Pasante de Desarrollo de Software</div>
+            <div class="org">Suramericana de Seguros — ARL SURA</div>
+            <div class="meta">jul 2025 – jul 2026</div>
+            <ul>
+              <li>Desarrollo y mantenimiento de microservicios en Java en un entorno empresarial.</li>
+              <li>Construcción de interfaces web con Angular 17 integradas a servicios backend.</li>
+              <li>Control de versiones con Git y trabajo en equipo bajo prácticas ágiles.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="reveal">
+          <h2 class="section-title">Educación</h2>
+          <div class="entry">
+            <div class="role">Ingeniería de Sistemas</div>
+            <div class="org">UNIMINUTO · décimo semestre</div>
+            <div class="meta">en curso</div>
+            <ul>
+              <li>Enfoque en desarrollo de software, bases de datos y arquitectura.</li>
+              <li>Certificándome en un diplomado en Inteligencia Artificial.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="block contact" id="contacto">
+    <div class="wrap">
+      <span class="eyebrow reveal">contacto</span>
+      <h2 class="section-title reveal">¿Trabajamos juntos?</h2>
+      <p class="sub reveal">Estoy abierto a proyectos freelance, prácticas y roles junior de backend o fullstack. Escríbeme y te respondo.</p>
+      <div class="contact-links reveal">
+        <a href="mailto:daniel.charry437@gmail.com">Correo</a>
+        <a href="https://www.linkedin.com/in/daniel-felipe-charry-rodriguez-5367152a1" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://github.com/DanielCharry02" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div>© <span id="year"></span> Daniel Felipe Charry Rodríguez · Diseñado y construido a mano.</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.14 });
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
